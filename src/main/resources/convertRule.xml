@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<convertRule>
+	<input file="C:\tools\workspace-cmp\moji\src\\moji\DCFI_501.txt" charasetName="MS932"/>
+	<output file="C:\tools\workspace-cmp\moji\src\\moji\DCFI_501_encode.txt" charasetName="MS932"/>
+	<mappings>
+		<mapping src="0xf88c" dest="0x9ad9"/>
+	</mappings>
+</convertRule>
