@@ -23,12 +23,17 @@ It will convert the external character in accordance with the settings file
 		</mappings>
 	</convertRule>
 
-### exec SjisConverter
+### cleate executable jar
 
-## Licence 
+mvn clean package
+
+### Exec SjisConverter
+
+java -Dpath=convertRule.xml -jar external-character-converter-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+## Licence
 
 MIT
 
-## Reference
 
-http://blue-red.ddo.jp/~ao/wiki/wiki.cgi?page=Java+%A4%CE+MS932%2C+Cp943C%2C+SJIS+%A4%CE%B0%E3%A4%A4
+
