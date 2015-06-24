@@ -25,11 +25,11 @@ It will convert the external character in accordance with the settings file
 
 ### cleate executable jar
 
-mvn clean package
+`mvn clean package`
 
 ### Exec SjisConverter
 
-java -Dpath=convertRule.xml -jar external-character-converter-1.0-SNAPSHOT-jar-with-dependencies.jar
+`java -Dpath=convertRule.xml -jar external-character-converter-1.0-SNAPSHOT-jar-with-dependencies.jar`
 
 ## Licence
 
