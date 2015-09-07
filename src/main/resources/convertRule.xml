@@ -1,8 +1,9 @@
-	<?xml version="1.0" encoding="UTF-8"?>
-	<convertRule>
-		<input file="/path/input.txt" charasetName="MS932"/>
-		<output file="/path/output.txt" charasetName="MS932"/>
-		<mappings>
-			<mapping src="0xf88c" dest="0x9ad9"/>
-		</mappings>
-	</convertRule>
+<?xml version="1.0" encoding="UTF-8"?>
+<convertRule>
+	<input file="input.txt" charasetName="MS932" />
+	<output file="/output.txt" charasetName="MS932" />
+	<mappings>
+		<!-- 綠 -->
+		<mapping src="F75F" dest="FB8D" />
+	</mappings>
+</convertRule>

@@ -26,6 +26,7 @@ public class XmlConvertRuleParser implements ConvertRuleParser {
 			document = documentBuilder.parse(path);
 			root = document.getDocumentElement();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ConvertRuleParseException("convertRule.xml is illegal.");
 		}
 

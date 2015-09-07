@@ -8,6 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.ByteBuffer;
+
+import javax.xml.bind.DatatypeConverter;
 
 import jp.gr.java_conf.uzresk.exconv.ConvertRuleHolder;
 import jp.gr.java_conf.uzresk.exconv.parser.ConvertRuleParseException;
@@ -32,29 +35,24 @@ public class SjisConverter {
 		BufferedWriter bw = null;
 		try {
 			File file = new File(holder.getInputFile());
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(
-					file), holder.getInputFileCharasetName()));
+			br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file), holder.getInputFileCharasetName()));
 
 			int ch = br.read();
 
-			FileOutputStream fos = new FileOutputStream(new File(
-					holder.getOutputFile()));
-			bw = new BufferedWriter(new OutputStreamWriter(fos,
-					holder.getOutputFileCharasetName()));
+			FileOutputStream fos = new FileOutputStream(new File(holder.getOutputFile()));
+			bw = new BufferedWriter(new OutputStreamWriter(fos, holder.getOutputFileCharasetName()));
 
 			while (ch != -1) {
 
 				int target = getSJISByte((char) ch, holder);
-
-				// 外字エリア(ユーザ定義）にあるものを出力
-				// if (0xF040 <= target) {
-				// System.out.println(Integer.toHexString(target));
-				// }
-
-				String targetHexStr = "0x" + Integer.toHexString(target);
+				String targetHexStr = Integer.toHexString(target).toUpperCase();
 				if (holder.getMappings().containsKey(targetHexStr)) {
-					bw.write(Integer.decode(
-							holder.getMappings().get(targetHexStr)).intValue());
+
+					// SJISの16進数
+					String destHexStr = holder.getMappings().get(targetHexStr);
+					byte[] destBytes = DatatypeConverter.parseHexBinary(destHexStr);
+					bw.write(new String(destBytes, holder.getOutputFileCharasetName()));
 
 				} else {
 					bw.write(ch);
@@ -74,15 +72,19 @@ public class SjisConverter {
 				System.exit(2);
 			}
 		}
-		System.out.println("finish normally.");
+		System.out.println("Successful completion.");
 		System.exit(0);
 	}
 
-	private static int getSJISByte(final char c, final ConvertRuleHolder holder)
-			throws Exception {
+	public static byte[] fromInt(int value) {
+		int arraySize = Integer.SIZE / Byte.SIZE;
+		ByteBuffer buffer = ByteBuffer.allocate(arraySize);
+		return buffer.putInt(value).array();
+	}
 
-		byte[] bArray = String.valueOf(c).getBytes(
-				holder.getInputFileCharasetName());
+	private static int getSJISByte(final char c, final ConvertRuleHolder holder) throws Exception {
+
+		byte[] bArray = String.valueOf(c).getBytes(holder.getInputFileCharasetName());
 
 		int targetChar;
 		if (bArray.length == 1) {
